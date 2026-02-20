@@ -1,8 +1,18 @@
 (function(){
+  const burger = document.getElementById("burger");
+  const mobile = document.getElementById("mobilemenu");
+  if(burger && mobile){
+    burger.addEventListener("click", ()=>{
+      const on = mobile.classList.toggle("on");
+      mobile.style.display = on ? "block" : "none";
+      burger.setAttribute("aria-expanded", on ? "true" : "false");
+    });
+  }
+
   const path = (location.pathname.endsWith("/") ? location.pathname + "index.html" : location.pathname).toLowerCase();
-  document.querySelectorAll(".nav a[data-page]").forEach(a=>{
-    const target = a.getAttribute("href").toLowerCase();
-    if(path.endsWith(target)) a.classList.add("active");
+  document.querySelectorAll("a[data-page]").forEach(a=>{
+    const href = (a.getAttribute("href")||"").toLowerCase();
+    if(href && path.endsWith(href.replace(/^\//,''))) a.classList.add("active");
   });
 
   const lb = document.getElementById("lb");
