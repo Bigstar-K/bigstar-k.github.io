@@ -294,3 +294,66 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // 모든 a[data-lb]를 하나의 라이트박스로 연결
+  const links = Array.from(document.querySelectorAll('a[data-lb][href]'));
+  if (!links.length) return;
+
+  const lb = document.getElementById("lb");
+  const img = lb.querySelector(".lb-img");
+  const closeEls = lb.querySelectorAll("[data-lb-close]");
+  const prevBtn = lb.querySelector("[data-lb-prev]");
+  const nextBtn = lb.querySelector("[data-lb-next]");
+
+  let i = 0;
+
+  const setNav = () => {
+    prevBtn.disabled = (i <= 0);
+    nextBtn.disabled = (i >= links.length - 1);
+  };
+
+  const open = (index) => {
+    i = index;
+    img.src = links[i].href;
+    img.alt = links[i].querySelector("img")?.alt || "";
+    lb.classList.add("is-open");
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    setNav();
+  };
+
+  const close = () => {
+    lb.classList.remove("is-open");
+    lb.setAttribute("aria-hidden", "true");
+    img.src = "";
+    document.body.style.overflow = "";
+  };
+
+  const go = (dir) => {
+    const ni = i + dir;
+    if (ni < 0 || ni >= links.length) return;
+    open(ni);
+  };
+
+  links.forEach((a, idx) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault(); // 링크 이동 방지
+      open(idx);
+    });
+  });
+
+  closeEls.forEach(el => el.addEventListener("click", close));
+  prevBtn.addEventListener("click", () => go(-1));
+  nextBtn.addEventListener("click", () => go(1));
+
+  document.addEventListener("keydown", (e) => {
+    if (!lb.classList.contains("is-open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") go(-1);
+    if (e.key === "ArrowRight") go(1);
+  });
+});
+</script>
