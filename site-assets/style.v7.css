@@ -114,7 +114,7 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
 
 .dropdown-menu{
   position:absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 4px);
   left: 0;
   min-width: 240px;
   background: rgba(11,11,12,.98);
