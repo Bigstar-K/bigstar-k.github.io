@@ -159,3 +159,40 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script src="/assets/js/app.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.getElementById("regardLeSonSlider");
+  if (!root) { console.warn("[slider] root not found"); return; }
+
+  const viewport = root.querySelector(".slider-viewport");
+  const track = root.querySelector(".slider-track");
+  const prevBtn = root.querySelector(".slider-btn.prev");
+  const nextBtn = root.querySelector(".slider-btn.next");
+
+  if (!viewport || !track || !prevBtn || !nextBtn) {
+    console.warn("[slider] missing elements", { viewport, track, prevBtn, nextBtn });
+    return;
+  }
+
+  const getStep = () => {
+    const first = track.querySelector("figure");
+    if (!first) return 320;
+    const gap = parseFloat(getComputedStyle(track).gap || "0");
+    return first.getBoundingClientRect().width + gap;
+  };
+
+  const scrollByStep = (dir) => {
+    const step = getStep();
+    console.log("[slider] step:", step, "scrollLeft(before):", viewport.scrollLeft);
+    viewport.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  prevBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); scrollByStep(-1); });
+  nextBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); scrollByStep(1); });
+
+  // viewport가 실제로 스크롤 가능해야 함
+  // (scrollWidth > clientWidth 가 아니면 "안 움직이는 것처럼" 보임)
+  console.log("[slider] scrollWidth/clientWidth:", viewport.scrollWidth, viewport.clientWidth);
+});
+</script>
