@@ -78,3 +78,8 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
   .burger{display:inline-flex}
   .home-hero .row{grid-template-columns:1fr; }
 }
+
+
+/* Lightbox controls only when open */
+#lb:not(.on) .controls,
+#lb:not(.on) .x { display:none; }

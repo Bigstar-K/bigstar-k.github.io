@@ -6,3 +6,6 @@ Fixes:
 
 Deploy:
 Upload all files to repo root and enable GitHub Pages (main / root).
+
+
+v6: cleaner index (no instagram-like blocks), lightbox controls shown only when open.
