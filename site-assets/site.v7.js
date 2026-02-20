@@ -196,3 +196,101 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("[slider] scrollWidth/clientWidth:", viewport.scrollWidth, viewport.clientWidth);
 });
 </script>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ===== Slider (transform 방식) =====
+  const root = document.getElementById("regardLeSonSlider");
+  if (!root) return;
+
+  const track = root.querySelector(".slider-track");
+  const prev = root.querySelector(".slider-btn.prev");
+  const next = root.querySelector(".slider-btn.next");
+  const items = Array.from(track.querySelectorAll("figure"));
+
+  let index = 0;
+
+  const stepPx = () => {
+    const first = items[0];
+    if (!first) return 320;
+    const gap = parseFloat(getComputedStyle(track).gap || "0");
+    return first.getBoundingClientRect().width + gap;
+  };
+
+  const maxIndex = () => Math.max(0, items.length - 1);
+
+  const render = () => {
+    const x = -(index * stepPx());
+    track.style.transform = `translateX(${x}px)`;
+    prev.disabled = (index <= 0);
+    next.disabled = (index >= maxIndex());
+  };
+
+  prev.addEventListener("click", (e) => { e.preventDefault(); index = Math.max(0, index - 1); render(); });
+  next.addEventListener("click", (e) => { e.preventDefault(); index = Math.min(maxIndex(), index + 1); render(); });
+
+  window.addEventListener("resize", () => render());
+  render();
+
+  // ===== Lightbox (자체 구현: 닫기/ESC/바깥클릭/Prev/Next) =====
+  const lb = document.getElementById("lb");
+  const lbImg = lb.querySelector(".lb-img");
+  const closeBtns = lb.querySelectorAll("[data-lb-close]");
+  const lbPrev = lb.querySelector("[data-lb-prev]");
+  const lbNext = lb.querySelector("[data-lb-next]");
+
+  const links = Array.from(root.querySelectorAll("a[href]"));
+  let lbIndex = 0;
+
+  const openLB = (i) => {
+    lbIndex = i;
+    lbImg.src = links[lbIndex].href;
+    lbImg.alt = links[lbIndex].querySelector("img")?.alt || "";
+    lb.classList.add("is-open");
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    updateNav();
+  };
+
+  const closeLB = () => {
+    lb.classList.remove("is-open");
+    lb.setAttribute("aria-hidden", "true");
+    lbImg.src = "";
+    document.body.style.overflow = "";
+  };
+
+  const updateNav = () => {
+    lbPrev.disabled = (lbIndex <= 0);
+    lbNext.disabled = (lbIndex >= links.length - 1);
+  };
+
+  const go = (dir) => {
+    const ni = lbIndex + dir;
+    if (ni < 0 || ni >= links.length) return;
+    openLB(ni);
+  };
+
+  // 기존 data-lb/외부 라이트박스 충돌 방지: 기본 이동 막고 우리 라이트박스 실행
+  links.forEach((a, i) => {
+    a.removeAttribute("data-lb"); // 혹시 남아있으면 제거
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openLB(i);
+    });
+  });
+
+  closeBtns.forEach(btn => btn.addEventListener("click", closeLB));
+  lbPrev.addEventListener("click", () => go(-1));
+  lbNext.addEventListener("click", () => go(1));
+
+  document.addEventListener("keydown", (e) => {
+    if (!lb.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLB();
+    if (e.key === "ArrowLeft") go(-1);
+    if (e.key === "ArrowRight") go(1);
+  });
+});
+</script>
