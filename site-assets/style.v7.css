@@ -340,3 +340,102 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
 }
 .gallery.slider .slider-btn.prev{ left: 16px; }
 .gallery.slider .slider-btn.next{ right: 16px; }
+
+
+/* ===== Slider (transform 기반: scrollBy 불필요) ===== */
+.gallery.slider{
+  position: relative;
+  max-width: 1100px;
+  margin: 18px auto 60px;
+  padding: 0 64px; /* 버튼 공간 확보 */
+}
+
+.slider-viewport{
+  overflow: hidden;         /* 스크롤 대신 transform */
+  border-radius: 16px;
+}
+
+.slider-track{
+  display: flex;
+  gap: 14px;
+  will-change: transform;
+  transition: transform 220ms ease;
+  transform: translateX(0px);
+}
+
+.gallery.slider figure{
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.gallery.slider a{
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.gallery.slider img{
+  display: block;
+  height: 420px;
+  width: auto;
+  object-fit: cover;
+}
+
+/* 버튼 */
+.gallery.slider .slider-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.92);
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 42px;
+  text-align: center;
+  pointer-events: auto;
+}
+.gallery.slider .slider-btn.prev{ left: 12px; }
+.gallery.slider .slider-btn.next{ right: 12px; }
+
+/* ===== Lightbox (닫기/ESC/바깥클릭 지원) ===== */
+.lb{ position: fixed; inset: 0; display: none; z-index: 99999; }
+.lb.is-open{ display: block; }
+.lb-backdrop{ position: absolute; inset: 0; background: rgba(0,0,0,.72); }
+.lb-panel{
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  padding: 24px;
+}
+.lb-img{
+  max-width: min(1200px, 92vw);
+  max-height: 88vh;
+  width: auto; height: auto;
+  border-radius: 14px;
+  background: #111;
+}
+.lb-close{
+  position: absolute; top: 18px; right: 18px;
+  width: 44px; height: 44px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.45);
+  color: #fff; cursor: pointer;
+}
+.lb-nav{
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 54px; height: 54px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.45);
+  color: #fff; cursor: pointer;
+  font-size: 30px; line-height: 52px; text-align: center;
+}
+.lb-nav.prev{ left: 18px; }
+.lb-nav.next{ right: 18px; }
+
+@media (max-width: 640px){
+  .gallery.slider img{ height: 260px; }
+  .gallery.slider{ padding: 0 56px; }
+}
