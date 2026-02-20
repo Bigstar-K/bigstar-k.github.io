@@ -62,3 +62,57 @@
     if(e.key === "ArrowRight") next();
   });
 })();
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const gallery = document.getElementById("pairedGallery");
+  if (!gallery) return;
+
+  // 1) 현재 gallery 안의 figure들을 모두 수집
+  const figures = Array.from(gallery.querySelectorAll(":scope > figure"));
+
+  // 2) gallery 비우고, row(2칸) 단위로 재구성
+  gallery.innerHTML = "";
+
+  let rowNum = 0;
+  for (let i = 0; i < figures.length; i += 2) {
+    rowNum += 1;
+    const setId = `row-${String(rowNum).padStart(2, "0")}`;
+
+    const row = document.createElement("div");
+    row.className = "row";
+
+    // 왼쪽 figure
+    const left = figures[i];
+    applySetAndCaption(left, setId);
+    row.appendChild(left);
+
+    // 오른쪽 figure (없으면 empty)
+    const right = figures[i + 1];
+    if (right) {
+      applySetAndCaption(right, setId);
+      row.appendChild(right);
+    } else {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      row.appendChild(empty);
+    }
+
+    gallery.appendChild(row);
+  }
+
+  function applySetAndCaption(figureEl, setId) {
+    const a = figureEl.querySelector("a[data-lb]");
+    const img = figureEl.querySelector("img");
+
+    // row 세트 지정 (라이트박스에서 row 단위로만 prev/next 하게 쓰임)
+    if (a) a.setAttribute("data-set", setId);
+
+    // figcaption 없으면 alt로 생성
+    if (img && !figureEl.querySelector("figcaption")) {
+      const cap = document.createElement("figcaption");
+      cap.textContent = img.getAttribute("alt") || "";
+      figureEl.appendChild(cap);
+    }
+  }
+});
