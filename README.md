@@ -9,3 +9,6 @@ Upload all files to repo root and enable GitHub Pages (main / root).
 
 
 v6: cleaner index (no instagram-like blocks), lightbox controls shown only when open.
+
+
+NOTE: v7 uses cache-busted asset filenames (style.v7.css / site.v7.js).
