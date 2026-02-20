@@ -116,3 +116,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+
+<script>
+(() => {
+  const root = document.getElementById("regardLeSonSlider");
+  if (!root) return;
+
+  const viewport = root.querySelector(".slider-viewport");
+  const track = root.querySelector(".slider-track");
+  const prevBtn = root.querySelector(".slider-btn.prev");
+  const nextBtn = root.querySelector(".slider-btn.next");
+
+  const getStep = () => {
+    const first = track.querySelector("figure");
+    if (!first) return 320;
+    const gap = parseFloat(getComputedStyle(track).gap || "0");
+    return first.getBoundingClientRect().width + gap;
+  };
+
+  const scrollByStep = (dir) => {
+    viewport.scrollBy({ left: dir * getStep(), behavior: "smooth" });
+  };
+
+  prevBtn.addEventListener("click", () => scrollByStep(-1));
+  nextBtn.addEventListener("click", () => scrollByStep(1));
+
+  // 세로 휠을 가로 이동으로 변환(트랙패드/마우스 모두 편해짐)
+  viewport.addEventListener("wheel", (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      viewport.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  // 키보드(← →) 지원
+  viewport.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") scrollByStep(-1);
+    if (e.key === "ArrowRight") scrollByStep(1);
+  });
+})();
+</script>
