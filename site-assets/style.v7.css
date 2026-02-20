@@ -439,3 +439,46 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
   .gallery.slider img{ height: 260px; }
   .gallery.slider{ padding: 0 56px; }
 }
+
+
+/* ===== Lightbox (Prev/Next/Close) ===== */
+.lb{ position: fixed; inset: 0; display: none; z-index: 99999; }
+.lb.is-open{ display: block; }
+
+.lb-backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.72); }
+
+.lb-panel{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  padding: 24px;
+}
+
+.lb-img{
+  max-width: min(1400px, 92vw);
+  max-height: 88vh;
+  width:auto; height:auto;
+  border-radius: 14px;
+  background:#111;
+}
+
+.lb-close{
+  position:absolute; top:18px; right:18px;
+  width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.45);
+  color:#fff; cursor:pointer;
+}
+
+.lb-nav{
+  position:absolute; top:50%; transform: translateY(-50%);
+  width:54px; height:54px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.45);
+  color:#fff; cursor:pointer;
+  font-size:30px; line-height:52px; text-align:center;
+}
+
+.lb-nav.prev{ left:18px; }
+.lb-nav.next{ right:18px; }
+
+.lb-nav:disabled{ opacity:.25; cursor:default; }
