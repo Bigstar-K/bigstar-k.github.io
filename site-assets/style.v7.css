@@ -320,3 +320,23 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
 }
 
 
+/* 버튼이 항상 클릭되도록 */
+.gallery.slider .slider-btn{
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* viewport/track는 버튼 위로 올라오지 않게 */
+.gallery.slider .slider-viewport,
+.gallery.slider .slider-track{
+  position: relative;
+  z-index: 1;
+}
+
+/* 혹시 figure/a가 버튼 영역까지 덮는 경우 방지 */
+.gallery.slider{
+  padding-left: 64px;   /* 버튼 공간 확보 */
+  padding-right: 64px;
+}
+.gallery.slider .slider-btn.prev{ left: 16px; }
+.gallery.slider .slider-btn.next{ right: 16px; }
