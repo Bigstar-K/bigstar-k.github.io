@@ -1,7 +1,8 @@
-# Portfolio (v4)
+# Portfolio (v5)
 
-- Texts and Bio preserved from Wix (KR + FR).
-- `.nojekyll` included.
-- Lightbox Prev/Next/Close works.
+Fixes:
+- Header menu is guaranteed visible (desktop + mobile hamburger).
+- Index is rebuilt to resemble Wix home flow (intro + works grid + Wix link).
 
-Deploy: upload to repo root and enable GitHub Pages.
+Deploy:
+Upload all files to repo root and enable GitHub Pages (main / root).
