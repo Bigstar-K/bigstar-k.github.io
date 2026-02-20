@@ -153,3 +153,52 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
   transform: translateY(0);
   pointer-events: auto;
 }
+
+
+/* 2장 세트(좌/우) -> 다음 세트는 다음 줄(row) */
+.gallery.grid2.paired{
+  max-width: 980px;
+  margin: 18px auto 60px;
+  padding: 0 20px;
+  display: grid;
+  gap: 18px;
+}
+
+/* 한 줄(row)은 항상 2칸 */
+.gallery.grid2.paired .row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.gallery.grid2.paired figure{ margin: 0; }
+
+.gallery.grid2.paired a{
+  display:block;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.02);
+}
+
+.gallery.grid2.paired img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.gallery.grid2.paired figcaption{
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* 빈칸 유지(원하면 border 없애도 됨) */
+.gallery.grid2.paired .empty{
+  border-radius: 14px;
+  border: 1px dashed rgba(255,255,255,.10);
+  background: transparent;
+  min-height: 120px;
+}
