@@ -506,3 +506,19 @@ main, .content, .gallery, .page, .router-view {
 .overlay.is-open, .cover.is-open, .backdrop.is-open {
   pointer-events: auto; /* 실제로 열릴 때만 클릭을 받게 */
 }
+
+
+
+.lb{position:fixed; inset:0; display:none; z-index:99999;}
+.lb.is-open{display:block;}
+.lb-backdrop{position:absolute; inset:0; background:rgba(0,0,0,.72);}
+.lb-panel{position:absolute; inset:0; display:grid; place-items:center; padding:24px;}
+.lb-img{max-width:min(1400px,92vw); max-height:88vh; border-radius:14px; background:#111;}
+.lb-close{position:absolute; top:18px; right:18px; width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.18); background:rgba(0,0,0,.45); color:#fff; cursor:pointer;}
+.lb-nav{position:absolute; top:50%; transform:translateY(-50%); width:54px; height:54px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.18); background:rgba(0,0,0,.45); color:#fff; cursor:pointer;
+  font-size:30px; line-height:52px; text-align:center;}
+.lb-nav.prev{left:18px;}
+.lb-nav.next{right:18px;}
+.lb-nav:disabled{opacity:.25; cursor:default;}
