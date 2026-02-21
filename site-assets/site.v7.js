@@ -357,3 +357,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+<button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
