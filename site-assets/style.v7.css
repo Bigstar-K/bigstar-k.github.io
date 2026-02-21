@@ -482,3 +482,27 @@ figure img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1p
 .lb-nav.next{ right:18px; }
 
 .lb-nav:disabled{ opacity:.25; cursor:default; }
+
+/* 모바일 메뉴 버튼이 항상 위에서 클릭되도록 */
+.site-header,
+.navbar,
+.menu-toggle {
+  position: relative;
+  z-index: 10000;
+  pointer-events: auto;
+}
+
+/* 혹시 메인/갤러리/오버레이가 헤더를 덮는 경우 방지 */
+main, .content, .gallery, .page, .router-view {
+  position: relative;
+  z-index: 1;
+}
+
+/* 만약 투명한 오버레이(div)가 전체를 덮는 구조라면,
+   그 오버레이는 기본적으로 클릭을 막지 않게 */
+.overlay, .cover, .backdrop {
+  pointer-events: none;
+}
+.overlay.is-open, .cover.is-open, .backdrop.is-open {
+  pointer-events: auto; /* 실제로 열릴 때만 클릭을 받게 */
+}
